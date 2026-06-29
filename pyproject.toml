@@ -1,0 +1,15 @@
+[project]
+name = "MatchPhotos"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Exxon",email = "exxonliu001@yahoo.com"},
+]
+dependencies = ["torch>=2.12.1", "torchvision>=0.27.1", "pillow>=12.2.0", "tqdm>=4.68.3", "numpy>=2.4.6", "opencv-python>=4.13.0.92"]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "GPL-3.0-or-later"}
+
+
+[tool.pdm]
+distribution = false
