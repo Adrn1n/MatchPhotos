@@ -263,7 +263,7 @@ def main():
     )
     parser.add_argument(
         "--output",
-        default="result.json",
+        default="outputs/result.json",
         help="Path to save matching results in JSON format.",
     )
     parser.add_argument(
@@ -271,7 +271,7 @@ def main():
     )
     parser.add_argument(
         "--cache-original-emb",
-        default="originals_emb.npz",
+        default="outputs/originals_emb.npz",
         help="Path to cache original embeddings.",
     )
     args = parser.parse_args()
@@ -300,6 +300,7 @@ def main():
             original_emb = extract_embeddings(
                 original_files, model, device, args.batch_size, args.image_size
             )
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
             np.savez(
                 cache_path,
                 paths=np.array([str(p) for p in original_files]),
@@ -310,6 +311,7 @@ def main():
         original_emb = extract_embeddings(
             original_files, model, device, args.batch_size, args.image_size
         )
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
         np.savez(
             cache_path,
             paths=np.array([str(p) for p in original_files]),
@@ -355,10 +357,13 @@ def main():
         )
         all_results[str(selected_path)] = reranked[: args.topk]
 
-    with open(args.output, "w", encoding="utf-8") as f:
+    output_path = Path(args.output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(all_results, f, ensure_ascii=False, indent=2)
 
-    print(f"Matching complete. Results saved to: {args.output}")
+    print(f"Matching complete. Results saved to: {output_path.resolve()}")
 
 
 if __name__ == "__main__":

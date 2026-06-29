@@ -8,10 +8,12 @@ def main():
         description="Export top matched original filenames to a text file."
     )
     parser.add_argument(
-        "--json", default="result.json", help="Path to the matching result JSON file."
+        "--json",
+        default="outputs/result.json",
+        help="Path to the matching result JSON file.",
     )
     parser.add_argument(
-        "--out", default="out.txt", help="Path to the output text file."
+        "--out", default="outputs/out.txt", help="Path to the output text file."
     )
     parser.add_argument(
         "--full-path",
@@ -44,6 +46,7 @@ def main():
         else:
             extracted_files.append(p.name)
 
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         for fname in extracted_files:
             f.write(fname + "\n")

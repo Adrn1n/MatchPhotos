@@ -5,6 +5,10 @@ This project was rapidly prototyped and generated entirely via **AI Vibe Coding*
 
 ---
 
+![小红书宣传海报](assets/imgs/poster/Xiaohongshu-poster.png)
+
+---
+
 ## Part 1: User Guide (For Photographers)
 ### Workflow Best Practices vs. This Tool
 - **The Ideal Workflow (Highly Recommended):**
@@ -16,6 +20,8 @@ This project was rapidly prototyped and generated entirely via **AI Vibe Coding*
 - **When to Use MatchPhotos:**
 
 	If your client sends back heavily compressed, downscaled images with scrambled filenames (e.g., via WeChat, iCloud Shared Albums, or WhatsApp) where all original metadata (EXIF) has been stripped, you cannot use the ideal workflow. **MatchPhotos** is designed as a fallback tool to automate the mapping process and save you hours of manual searching.
+
+	*(Note: While some photographers attempt to solve this by embedding unique identifier watermarks directly onto preview images, this compromises the visual presentation. Moreover, manually cross-referencing watermarked photos is exhausting at scale, and automating it via OCR is far from trivial. MatchPhotos offers a seamless, non-intrusive alternative.)*
 
 ### Installation
 We highly recommend running this project in an **isolated environment** (either a dedicated conda environment or a local Python virtual environment `.venv`) to prevent dependency conflicts.
@@ -60,16 +66,17 @@ Point the script to your client's selections folder and your high-res originals 
 python main.py --selected /path/to/client_selections --originals /path/to/highres_originals
 ```
 
-*Note: On the first run, the script will scan and index your original photos. It creates a cache file (`originals_emb.npz`) so subsequent runs on the same original set will start instantly.*
+*Note: On the first run, the script will scan and index your original photos. It creates a cache file (`outputs/originals_emb.npz`) so subsequent runs on the same original set will start instantly.*
 
 #### Step 2: Export Results for Capture One/Lightroom
-Once matching completes, it generates a `result.json` file. Convert this into an easy-to-use text file:
+Once matching completes, it generates a `result.json` file in the `outputs/` folder. Convert this into an easy-to-use text file by running:
 ```bash
-python export_txt.py --json result.json --out out.txt
+# Uses default paths: reads 'outputs/result.json' and writes to 'outputs/out.txt'
+python export_txt.py
 ```
 
 This script outputs:
-1. A text file (`out.txt`) listing all the matched original filenames.
+1. A text file (`outputs/out.txt`) listing all the matched original filenames.
 2. A **space-separated list of filenames** printed directly to your terminal. You can copy and paste this text string directly into the search/filter bar of **Capture One** or **Lightroom** to isolate the selected files instantly.
 
 ## Part 2: Technical Specifications (For Developers)
