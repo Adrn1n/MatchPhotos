@@ -105,7 +105,7 @@ This ensures native, optimal execution on NVIDIA GPUs (CUDA), Apple Silicon (MPS
 #### 2. Native JPEG Resolution Optimization (Draft Mode)
 Decoding high-resolution JPEG files (e.g., 45MP+ RAW/JPG files) is highly CPU-bound. To bypass full-resolution decoding overhead, we utilize PIL’s `draft` mode:
 ```python
-            img.draft("RGB", (draft_size, draft_size)
+            img.draft("RGB", (draft_size, draft_size))
 ```
 
 This instructs the underlying `libjpeg` decoder to downsample the image during the decoding process, yielding a **5x to 10x speedup** in overall I/O processing times.
